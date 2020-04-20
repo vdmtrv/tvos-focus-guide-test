@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import * as uuid from 'uuid';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,12 +15,12 @@ import {
   View,
   FlatList,
   Text,
-    TouchableOpacity
+  TouchableOpacity,
+  TVFocusGuideView,
+  Dimensions
 } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-
-
 
 const items = [
   {
@@ -39,81 +40,217 @@ const items = [
   }
 ];
 
+class Focus {
+  constructor() {
+    this.rows = {};
+  }
+
+  registerRow(id) {
+    const order = Object.keys(this.rows).length;
+    this.rows[id] = {
+      id,
+      columns: {},
+      order
+    };
+  }
+
+  registerColumn(columnId, rowId, componentRef) {
+    if (this.rows[rowId]) {
+      const order = Object.keys(this.rows[rowId].columns).length;
+      this.rows[rowId].columns[columnId] = {
+        id: columnId,
+        componentRef,
+        order
+      };
+    }
+  }
+
+  unregisterRow(id) {
+    if (this.rows[id]) {
+      delete this.rows[id];
+    }
+  }
+
+  unregisterColumn(columnId, rowId) {
+    if (this.rows[rowId]) {
+      delete this.rows[rowId].columns[columnId];
+    }
+  }
+
+  get activeRows() {
+    return this.rows;
+  }
+
+  fetchSiblings(rowId, columnId) {
+    const currentRow = this.rows[rowId];
+    const currentRowIndex = currentRow.order;
+    const currentColIndex = currentRow.columns[columnId].order;
+
+    const rows = Object.values(this.rows);
+    const nextRow = rows.find(item => item.order === currentRowIndex + 1);
+    const prevRow = rows.find(item => item.order === currentRowIndex - 1);
+
+    const currentRowCols = Object.values(this.rows[rowId].columns);
+    const prevCard = currentRowCols.find(item => item.order === currentColIndex - 1);
+    const nextCard = currentRowCols.find(item => item.order === currentColIndex + 1);
+
+    let top;
+    let bottom;
+    let left;
+    let right;
+
+    if (prevRow) {
+      const col = Object.values(prevRow.columns).find(column => column.order === currentRowIndex || column.order === 0);
+      if (col) top = col.componentRef;
+    }
+
+    if (nextRow) {
+      const col = Object.values(nextRow.columns).find(column => column.order === currentRowIndex || column.order === 0);
+      if (col) bottom = col.componentRef;
+    }
+
+    if (prevCard) {
+      left = prevCard.componentRef;
+    }
+
+    if (nextCard) {
+      right = nextCard.componentRef;
+    }
+
+    console.log('>>>> siblings', [
+      top,
+      bottom,
+      left,
+      right
+    ]);
+
+    return [
+      top,
+      bottom,
+      left,
+      right
+    ].filter(item => item !== undefined);
+  }
+}
+
+const FocusManager = new Focus();
+
+class Row extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.rowId = uuid.v4();
+    FocusManager.registerRow(this.rowId);
+  }
+
+  componentWillUnmount() {
+    FocusManager.unregisterRow(this.rowId);
+  }
+
+  render() {
+    const { data, onFocusCard, style } = this.props;
+
+    return (
+        <FlatList
+            contentContainerStyle={[styles.flatlist, style]}
+            data={data}
+            contentInsetAdjustmentBehavior="never"
+            horizontal
+            keyExtractor={keyExtractor}
+            onScrollToIndexFailed={() => {
+            }}
+            renderItem={data => <Card data={data} rowId={this.rowId} onFocusCard={onFocusCard}/>}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        />
+    )
+  }
+}
+
+class Card extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.columnId = uuid.v4();
+    this.ref = null;
+  }
+
+  componentDidMount() {
+    FocusManager.registerColumn(this.columnId, this.props.rowId, this.ref);
+  }
+
+  componentWillUnmount() {
+    const { rowId } = this.props;
+    FocusManager.unregisterColumn(this.columnId, rowId);
+  }
+
+  onFocus = () => {
+    const { onFocusCard, rowId } = this.props;
+
+    console.log('>>>> active', FocusManager.activeRows);
+    // console.log('>>> current', {rowId, columnId: this.columnId});
+
+    if (onFocusCard) onFocusCard(FocusManager.fetchSiblings(rowId, this.columnId));
+  };
+
+  render() {
+    const { data: { item } } = this.props;
+
+    return (
+        <TouchableOpacity
+            ref={ref => this.ref = ref}
+            onPress={item.onPress}
+            onFocus={this.onFocus}
+            style={[
+              styles.card,
+              {backgroundColor: item.background}
+            ]}
+        >
+          <Text>{item.title}</Text>
+        </TouchableOpacity>
+    )
+  }
+}
+
 const keyExtractor = (item, index: number) => `${index}-${item.title}`;
 
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-const Card = (props) => {
-  const { data: { item } } = props;
-  return (
-      <TouchableOpacity
-          onPress={item.onPress}
-          style={[
-            styles.card,
-            { backgroundColor: item.background }
-          ]}
-      >
-        <Text>{item.title}</Text>
-      </TouchableOpacity>
-  )
-};
+    this.state = {
+      destinations: []
+    }
+  }
 
-const App: () => React$Node = () => {
-  return (
-    <SafeAreaView>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
+  onFocusCard = destinations => this.setState({ destinations });
 
-        <View style={styles.featured}>
-          <TouchableOpacity onPress={() => console.log('>>>> I\'m a CTA')} style={styles.button}>
-            <Text>CTA</Text>
-          </TouchableOpacity>
-        </View>
+  render() {
+    const { destinations } = this.state;
+    return (
+        <SafeAreaView>
+          <TVFocusGuideView destinations={destinations}/>
+          <ScrollView
+              contentInsetAdjustmentBehavior="automatic"
+              style={styles.scrollView}>
 
-        <FlatList
-            contentContainerStyle={styles.flatlist}
-            data={[items[0]]}
-            contentInsetAdjustmentBehavior="never"
-            horizontal
-            innerRef={ref => (this.ref = ref)}
-            keyExtractor={keyExtractor}
-            onScrollToIndexFailed={() => {}}
-            renderItem={data => <Card data={data} />}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-        />
+            <View style={styles.featured}>
+              <Row data={[items[1]]} onFocusCard={this.onFocusCard} style={styles.smallFlatList}/>
+            </View>
 
-        <FlatList
-            contentContainerStyle={styles.flatlist}
-            data={[...items]}
-            contentInsetAdjustmentBehavior="never"
-            horizontal
-            innerRef={ref => (this.ref = ref)}
-            keyExtractor={keyExtractor}
-            onScrollToIndexFailed={() => {}}
-            renderItem={data => <Card data={data} />}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-        />
-
-        <FlatList
-            contentContainerStyle={[{ backgroundColor: 'white' }]}
-            data={[...items, ...items, ...items]}
-            contentInsetAdjustmentBehavior="never"
-            horizontal
-            innerRef={ref => (this.ref = ref)}
-            keyExtractor={keyExtractor}
-            onScrollToIndexFailed={() => {}}
-            renderItem={data => <Card data={data} />}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-        />
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+            <Row data={[items[0]]} onFocusCard={this.onFocusCard} />
+            <Row data={items} onFocusCard={this.onFocusCard} />
+            <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard} />
+          </ScrollView>
+        </SafeAreaView>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
+  smallFlatList: {
+    marginLeft: Dimensions.get('screen').width / 2
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
