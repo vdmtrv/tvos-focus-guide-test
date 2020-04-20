@@ -12,61 +12,104 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  FlatList,
   Text,
+    TouchableOpacity
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+
+
+
+const items = [
+  {
+    title: 'abc',
+    background: 'red',
+    onPress: () => console.log('I\'m red')
+  },
+  {
+    title: 'def',
+    background: 'green',
+    onPress: () => console.log('I\'m green')
+  },
+  {
+    title: 'ghi',
+    background: 'blue',
+    onPress: () => console.log('I\'m blue')
+  }
+];
+
+const keyExtractor = (item, index: number) => `${index}-${item.title}`;
+
+
+const Card = (props) => {
+  const { data: { item } } = props;
+  return (
+      <TouchableOpacity
+          onPress={item.onPress}
+          style={[
+            styles.card,
+            { backgroundColor: item.background }
+          ]}
+      >
+        <Text>{item.title}</Text>
+      </TouchableOpacity>
+  )
+};
 
 const App: () => React$Node = () => {
   return (
-    <>
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <SafeAreaView>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.scrollView}>
+
+        <View style={styles.featured}>
+          <TouchableOpacity onPress={() => console.log('>>>> I\'m a CTA')} style={styles.button}>
+            <Text>CTA</Text>
+          </TouchableOpacity>
+        </View>
+
+        <FlatList
+            contentContainerStyle={styles.flatlist}
+            data={[items[0]]}
+            contentInsetAdjustmentBehavior="never"
+            horizontal
+            innerRef={ref => (this.ref = ref)}
+            keyExtractor={keyExtractor}
+            onScrollToIndexFailed={() => {}}
+            renderItem={data => <Card data={data} />}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        />
+
+        <FlatList
+            contentContainerStyle={styles.flatlist}
+            data={[...items]}
+            contentInsetAdjustmentBehavior="never"
+            horizontal
+            innerRef={ref => (this.ref = ref)}
+            keyExtractor={keyExtractor}
+            onScrollToIndexFailed={() => {}}
+            renderItem={data => <Card data={data} />}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        />
+
+        <FlatList
+            contentContainerStyle={[{ backgroundColor: 'white' }]}
+            data={[...items, ...items, ...items]}
+            contentInsetAdjustmentBehavior="never"
+            horizontal
+            innerRef={ref => (this.ref = ref)}
+            keyExtractor={keyExtractor}
+            onScrollToIndexFailed={() => {}}
+            renderItem={data => <Card data={data} />}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -74,39 +117,28 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  card: {
+    width: 300,
+    height: 200,
+    marginHorizontal: 10
   },
-  body: {
-    backgroundColor: Colors.white,
+  flatlist: {
+    backgroundColor: 'white',
+    marginBottom: 20
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  featured: {
+    height: 200,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  button: {
+    width: 100,
+    height: 50,
+    backgroundColor: 'magenta',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+
 });
 
 export default App;
