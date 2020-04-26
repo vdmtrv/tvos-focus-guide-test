@@ -12,6 +12,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		22F9FEFDA03A5F3ADCDC5C79 /* libPods-testTVAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B19B03A133A5BB9C58F9E77 /* libPods-testTVAppTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -19,7 +20,6 @@
 		BBC054763CBCE0E835AFB659 /* libPods-testTVApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 678883F62F0A970A07E385BF /* libPods-testTVApp-tvOSTests.a */; };
 		CE32AD2C4B30D8A406528892 /* libPods-testTVApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9C2B6A2EF254E36485C9 /* libPods-testTVApp-tvOS.a */; };
 		D83004A059BEDAF75C303A3A /* libPods-testTVApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77230B7DB76A392AD1D4AE10 /* libPods-testTVApp.a */; };
-		DCE1929F48B352BADAFBE22B /* libPods-testTVAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB4676B304F0B2BB573EC3D /* libPods-testTVAppTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +45,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* testTVAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testTVAppTests.m; sourceTree = "<group>"; };
 		09C1CDCBFAFDB8B065F5D7A8 /* Pods-testTVApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp.release.xcconfig"; path = "Target Support Files/Pods-testTVApp/Pods-testTVApp.release.xcconfig"; sourceTree = "<group>"; };
+		0B19B03A133A5BB9C58F9E77 /* libPods-testTVAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-testTVAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* testTVApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testTVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = testTVApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = testTVApp/AppDelegate.m; sourceTree = "<group>"; };
@@ -55,13 +56,14 @@
 		2D02E47B1E0B4A5D006451C7 /* testTVApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "testTVApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* testTVApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "testTVApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		321666EC0A04AF629EA3E09D /* Pods-testTVApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-testTVApp-tvOS/Pods-testTVApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		3814DB195667D7BFA76355DF /* Pods-testTVApp-testTVAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp-testTVAppTests.debug.xcconfig"; path = "Target Support Files/Pods-testTVApp-testTVAppTests/Pods-testTVApp-testTVAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4EB7A79314C27D3FEAC59000 /* Pods-testTVAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVAppTests.debug.xcconfig"; path = "Target Support Files/Pods-testTVAppTests/Pods-testTVAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5E9D4B3E70CBD4DAB801B449 /* Pods-testTVApp-testTVAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp-testTVAppTests.release.xcconfig"; path = "Target Support Files/Pods-testTVApp-testTVAppTests/Pods-testTVApp-testTVAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		678883F62F0A970A07E385BF /* libPods-testTVApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-testTVApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		77230B7DB76A392AD1D4AE10 /* libPods-testTVApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-testTVApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA5FB9E234F94DE25349CB9 /* Pods-testTVAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVAppTests.release.xcconfig"; path = "Target Support Files/Pods-testTVAppTests/Pods-testTVAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		8EBA9C2B6A2EF254E36485C9 /* libPods-testTVApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-testTVApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		947BF4EA7F1EFBC04F8D8DEC /* Pods-testTVApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-testTVApp-tvOSTests/Pods-testTVApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		9AB4676B304F0B2BB573EC3D /* libPods-testTVAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-testTVAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CAFC6ED3CD09E6930943CE /* Pods-testTVApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-testTVApp-tvOSTests/Pods-testTVApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1DC24934CC324D4BA9879A8 /* Pods-testTVApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testTVApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-testTVApp-tvOS/Pods-testTVApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -74,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCE1929F48B352BADAFBE22B /* libPods-testTVAppTests.a in Frameworks */,
+				22F9FEFDA03A5F3ADCDC5C79 /* libPods-testTVAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +146,7 @@
 				77230B7DB76A392AD1D4AE10 /* libPods-testTVApp.a */,
 				8EBA9C2B6A2EF254E36485C9 /* libPods-testTVApp-tvOS.a */,
 				678883F62F0A970A07E385BF /* libPods-testTVApp-tvOSTests.a */,
-				9AB4676B304F0B2BB573EC3D /* libPods-testTVAppTests.a */,
+				0B19B03A133A5BB9C58F9E77 /* libPods-testTVAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,6 +162,8 @@
 				947BF4EA7F1EFBC04F8D8DEC /* Pods-testTVApp-tvOSTests.release.xcconfig */,
 				4EB7A79314C27D3FEAC59000 /* Pods-testTVAppTests.debug.xcconfig */,
 				8BA5FB9E234F94DE25349CB9 /* Pods-testTVAppTests.release.xcconfig */,
+				3814DB195667D7BFA76355DF /* Pods-testTVApp-testTVAppTests.debug.xcconfig */,
+				5E9D4B3E70CBD4DAB801B449 /* Pods-testTVApp-testTVAppTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;

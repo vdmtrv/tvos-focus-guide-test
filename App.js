@@ -228,21 +228,20 @@ class App extends React.Component {
   render() {
     const { destinations } = this.state;
     return (
-        <SafeAreaView>
-          <TVFocusGuideView destinations={destinations}/>
-          <ScrollView
-              contentInsetAdjustmentBehavior="automatic"
-              style={styles.scrollView}>
+      <SafeAreaView>
+        <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+          <TVFocusGuideView destinations={destinations} />
+          <View style={styles.featured} hasTVPreferredFocus>
+            <Row data={[items[1]]} onFocusCard={this.onFocusCard} style={styles.smallFlatList}/>
+          </View>
 
-            <View style={styles.featured}>
-              <Row data={[items[1]]} onFocusCard={this.onFocusCard} style={styles.smallFlatList}/>
-            </View>
-
-            <Row data={[items[0]]} onFocusCard={this.onFocusCard} />
-            <Row data={items} onFocusCard={this.onFocusCard} />
-            <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard} />
-          </ScrollView>
-        </SafeAreaView>
+          <Row data={[items[0]]} onFocusCard={this.onFocusCard} />
+          <Row data={items} onFocusCard={this.onFocusCard} />
+          <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard} />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
