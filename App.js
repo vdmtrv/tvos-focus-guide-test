@@ -7,7 +7,8 @@
  */
 
 import React from 'react';
-import * as uuid from 'uuid';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 import {
   SafeAreaView,
   StyleSheet,
@@ -139,7 +140,7 @@ class Row extends React.Component {
   constructor(props) {
     super(props);
 
-    this.rowId = uuid.v4();
+    this.rowId = uuidv4();
     FocusManager.registerRow(this.rowId);
   }
 
@@ -171,7 +172,7 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
 
-    this.columnId = uuid.v4();
+    this.columnId = uuidv4();
     this.ref = null;
   }
 
