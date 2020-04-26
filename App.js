@@ -232,7 +232,9 @@ class App extends React.Component {
         <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-          <TVFocusGuideView destinations={destinations} />
+          <View style={{flex:1, minHeight: 2}}>
+            <TVFocusGuideView destinations={destinations} />
+          </View>
           <View style={styles.featured} hasTVPreferredFocus>
             <Row data={[items[1]]} onFocusCard={this.onFocusCard} style={styles.smallFlatList}/>
           </View>
