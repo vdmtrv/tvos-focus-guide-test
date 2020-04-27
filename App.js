@@ -173,6 +173,9 @@ class Card extends React.Component {
 
     this.columnId = uuidv4();
     this.ref = null;
+    this.state = {
+      focused: false
+    }
   }
 
   componentDidMount() {
@@ -184,32 +187,47 @@ class Card extends React.Component {
     FocusManager.unregisterColumn(this.columnId, rowId);
   }
 
-  onFocus = () => {
-    const { onFocusCard, rowId } = this.props;
+  onFocus = (e) => {
+    // const { onFocusCard, rowId } = this.props;
 
     console.log('>>>> active', FocusManager.activeRows);
     // console.log('>>> current', {rowId, columnId: this.columnId});
 
-    if (onFocusCard) onFocusCard(FocusManager.fetchSiblings(rowId, this.columnId));
+    this.setState({ focused: true });
+    // if (onFocusCard) onFocusCard(FocusManager.fetchSiblings(rowId, this.columnId));
   };
 
+  onBlur = () => this.setState({ focused: false });
+
   render() {
-    const { data: { item } } = this.props;
+    const { rowId, data: { item } } = this.props;
+    if (this.state.focused) {
+      console.log(FocusManager.fetchSiblings(rowId, this.columnId));
+    }
 
     return (
-        <TouchableOpacity
-            ref={ref => this.ref = ref}
-            onPress={item.onPress}
-            onFocus={this.onFocus}
-            style={[
-              styles.card,
-              {backgroundColor: item.background}
-            ]}
-        >
-          <Text style={styles.cardText}>
-            {item.title + '-' + (this.ref?._nativeTag || null)}
-          </Text>
-        </TouchableOpacity>
+        <View>
+          {this.state.focused && <TVFocusGuideView style={{backgroundColor: 'magenta'}} destinations={[FocusManager.fetchSiblings(rowId, this.columnId).top]} />}
+          <View style={{flexDirection: 'row'}}>
+            {this.state.focused && <TVFocusGuideView style={{backgroundColor: 'magenta'}} destinations={[FocusManager.fetchSiblings(rowId, this.columnId).left]} />}
+            <TouchableOpacity
+                ref={ref => this.ref = ref}
+                onPress={item.onPress}
+                onFocus={this.onFocus}
+                onBlur={this.onBlur}
+                style={[
+                  styles.card,
+                  {backgroundColor: item.background}
+                ]}
+            >
+              <Text style={styles.cardText}>
+                {item.title + '-' + (this.ref?._nativeTag || null)}
+              </Text>
+            </TouchableOpacity>
+            {this.state.focused && <TVFocusGuideView style={{backgroundColor: 'magenta'}} destinations={[FocusManager.fetchSiblings(rowId, this.columnId).right]} />}
+          </View>
+          {this.state.focused && <TVFocusGuideView style={{backgroundColor: 'magenta'}} destinations={[FocusManager.fetchSiblings(rowId, this.columnId).bottom]} />}
+        </View>
     )
   }
 }
@@ -234,11 +252,6 @@ class App extends React.Component {
         <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-          <TVFocusGuideView style={styles.focusView} destinations={destinations}>
-            <Text style={styles.cardText}>
-              Focus guide
-            </Text>
-          </TVFocusGuideView>
           <View style={styles.featured} hasTVPreferredFocus>
             <Row data={[items[1]]} onFocusCard={this.onFocusCard(false)} style={styles.smallFlatList}/>
           </View>
