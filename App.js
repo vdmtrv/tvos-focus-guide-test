@@ -234,9 +234,11 @@ class App extends React.Component {
         <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-          <View style={{flex:1, minHeight: 2}}>
-            <TVFocusGuideView destinations={destinations} />
-          </View>
+          <TVFocusGuideView style={styles.focusView} destinations={destinations}>
+            <Text style={styles.cardText}>
+              Focus guide
+            </Text>
+          </TVFocusGuideView> 
           <View style={styles.featured} hasTVPreferredFocus>
             <Row data={[items[1]]} onFocusCard={this.onFocusCard} style={styles.smallFlatList}/>
           </View>
@@ -283,6 +285,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 50,
     backgroundColor: 'magenta',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  focusView: {
+    backgroundColor: '#dddddd',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   }
