@@ -225,7 +225,7 @@ class App extends React.Component {
     }
   }
 
-  onFocusCard = destinations => this.setState({ destinations });
+  onFocusCard = (shouldUpdate: boolean = true) => destinations => this.setState({ destinations: shouldUpdate ? destinations : [] });
 
   render() {
     const { destinations } = this.state;
@@ -238,14 +238,14 @@ class App extends React.Component {
             <Text style={styles.cardText}>
               Focus guide
             </Text>
-          </TVFocusGuideView> 
+          </TVFocusGuideView>
           <View style={styles.featured} hasTVPreferredFocus>
-            <Row data={[items[1]]} onFocusCard={this.onFocusCard} style={styles.smallFlatList}/>
+            <Row data={[items[1]]} onFocusCard={this.onFocusCard(false)} style={styles.smallFlatList}/>
           </View>
 
-          <Row data={[items[0]]} onFocusCard={this.onFocusCard} />
-          <Row data={items} onFocusCard={this.onFocusCard} />
-          <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard} />
+          <Row data={[items[0]]} onFocusCard={this.onFocusCard()} />
+          <Row data={items} onFocusCard={this.onFocusCard()} />
+          <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard()} />
           <View>
             <Text style={styles.cardText}>
               {'Destination tags = ' + destinations.map(d => (d?._nativeTag || null)).join(',')}
