@@ -4968,9 +4968,9 @@ react-native-get-random-values@^1.4.0:
   dependencies:
     fast-base64-decode "^1.0.0"
 
-"react-native@git+https://github.com/react-native-community/react-native-tvos.git#873d1e1fae7c21b415e929f3fb1c238be5bce7e4":
-  version "0.62.2"
-  resolved "git+https://github.com/react-native-community/react-native-tvos.git#873d1e1fae7c21b415e929f3fb1c238be5bce7e4"
+"react-native@git+https://github.com/react-native-community/react-native-tvos.git#dlowder/focus-delay-fix":
+  version "0.62.2-0"
+  resolved "git+https://github.com/react-native-community/react-native-tvos.git#18261fc282702129be78934fa83e38a7dc60ffd4"
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^4.5.1"

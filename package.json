@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "git+https://github.com/react-native-community/react-native-tvos.git#873d1e1fae7c21b415e929f3fb1c238be5bce7e4",
+    "react-native": "git+https://github.com/react-native-community/react-native-tvos.git#dlowder/focus-delay-fix",
     "react-native-get-random-values": "^1.4.0",
     "uuid": "^7.0.3"
   },
