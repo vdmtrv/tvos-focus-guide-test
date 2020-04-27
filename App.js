@@ -119,12 +119,11 @@ class Focus {
     }
 
     console.log('>>>> siblings', [
-      top,
-      bottom,
-      left,
-      right
+      top?._nativeTag || null,
+      bottom?._nativeTag || null,
+      left?._nativeTag || null,
+      right?._nativeTag || null
     ]);
-
     return [
       top,
       bottom,
@@ -207,7 +206,9 @@ class Card extends React.Component {
               {backgroundColor: item.background}
             ]}
         >
-          <Text>{item.title}</Text>
+          <Text style={styles.cardText}>
+            {item.title + '-' + (this.ref?._nativeTag || null)}
+          </Text>
         </TouchableOpacity>
     )
   }
@@ -243,6 +244,11 @@ class App extends React.Component {
           <Row data={[items[0]]} onFocusCard={this.onFocusCard} />
           <Row data={items} onFocusCard={this.onFocusCard} />
           <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard} />
+          <View>
+            <Text style={styles.cardText}>
+              {'Destination tags = ' + destinations.map(d => (d?._nativeTag || null)).join(',')}
+            </Text>
+          </View>
         </ScrollView>
       </SafeAreaView>
     );
@@ -260,6 +266,9 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
     marginHorizontal: 10
+  },
+  cardText: {
+    fontSize: 40
   },
   flatlist: {
     backgroundColor: 'white',
