@@ -124,12 +124,12 @@ class Focus {
       left?._nativeTag || null,
       right?._nativeTag || null
     ]);
-    return [
+    return {
       top,
       bottom,
       left,
       right
-    ].filter(item => item !== undefined);
+    };
   }
 }
 
@@ -159,7 +159,7 @@ class Row extends React.Component {
             keyExtractor={keyExtractor}
             onScrollToIndexFailed={() => {
             }}
-            renderItem={data => <Card data={data} rowId={this.rowId} onFocusCard={onFocusCard}/>}
+            renderItem={d => <Card data={d} destinations={this.props.destinations} rowId={this.rowId} onFocusCard={onFocusCard}/>}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
         />
@@ -197,19 +197,26 @@ class Card extends React.Component {
     const { data: { item } } = this.props;
 
     return (
-        <TouchableOpacity
-            ref={ref => this.ref = ref}
-            onPress={item.onPress}
-            onFocus={this.onFocus}
-            style={[
-              styles.card,
-              {backgroundColor: item.background}
-            ]}
-        >
-          <Text style={styles.cardText}>
-            {item.title + '-' + (this.ref?._nativeTag || null)}
-          </Text>
-        </TouchableOpacity>
+        <View>
+          <TVFocusGuideView destinations={[this.props.destinations?.top]} />
+          <View style={{flexDirection: 'row'}}>
+            <TVFocusGuideView destinations={[this.props.destinations?.left]} />
+              <TouchableOpacity
+                  ref={ref => this.ref = ref}
+                  onPress={item.onPress}
+                  onFocus={this.onFocus}
+                  style={[
+                    styles.card,
+                    {backgroundColor: item.background}
+                  ]}>
+                <Text style={styles.cardText}>
+                  {item.title + '-' + (this.ref?._nativeTag || null)}
+                </Text>
+              </TouchableOpacity>
+            <TVFocusGuideView destinations={[this.props.destinations?.right]} />
+          </View>
+          <TVFocusGuideView destinations={[this.props.destinations?.bottom]} />
+        </View>
     )
   }
 }
@@ -221,7 +228,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      destinations: []
+      destinations: {}
     }
   }
 
@@ -234,21 +241,19 @@ class App extends React.Component {
         <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-          <TVFocusGuideView style={styles.focusView} destinations={destinations}>
-            <Text style={styles.cardText}>
-              Focus guide
-            </Text>
-          </TVFocusGuideView>
           <View style={styles.featured} hasTVPreferredFocus>
-            <Row data={[items[1]]} onFocusCard={this.onFocusCard(false)} style={styles.smallFlatList}/>
+            <Row destinations={destinations} data={[items[1]]} onFocusCard={this.onFocusCard(false)} style={styles.smallFlatList}/>
           </View>
 
-          <Row data={[items[0]]} onFocusCard={this.onFocusCard()} />
-          <Row data={items} onFocusCard={this.onFocusCard()} />
-          <Row data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard()} />
+          <Row destinations={destinations} data={[items[0]]} onFocusCard={this.onFocusCard()} />
+          <Row destinations={destinations} data={items} onFocusCard={this.onFocusCard()} />
+          <Row destinations={destinations} data={[...items, ...items, ...items]} onFocusCard={this.onFocusCard()} />
           <View>
             <Text style={styles.cardText}>
-              {'Destination tags = ' + destinations.map(d => (d?._nativeTag || null)).join(',')}
+              {'Top = ' + (destinations?.top?._nativeTag || 'null') +
+               ', Bottom = ' + (destinations?.bottom?._nativeTag || 'null') +
+               ', Left = ' + (destinations?.left?._nativeTag || 'null')+
+               ', Right = ' + (destinations?.right?._nativeTag || 'null')}
             </Text>
           </View>
         </ScrollView>
